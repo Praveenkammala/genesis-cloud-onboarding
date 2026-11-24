@@ -1,0 +1,1793 @@
+{
+  "name": "Kyndryl Managed Services · Fictional Azure multi-workload estate",
+  "provider": "azure",
+  "region": "eastus",
+  "subscription_id": "11111111-1111-4111-8111-111111111111",
+  "resources": [
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01",
+      "type": "Microsoft.Resources/subscriptions/resourceGroups",
+      "name": "rg-northstar-payments-prd-01",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {}
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/virtualNetworks/vnet-payhub-prod",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "vnet-payhub-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.60.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/virtualNetworks/vnet-payhub-prod/subnets/snet-payhub-web"
+          },
+          {
+            "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/virtualNetworks/vnet-payhub-prod/subnets/snet-payhub-data"
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/virtualNetworks/vnet-payhub-prod/subnets/snet-payhub-web",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "snet-payhub-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {},
+      "properties": {
+        "addressPrefix": "10.60.1.0/24",
+        "virtualNetwork": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/virtualNetworks/vnet-payhub-prod"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/virtualNetworks/vnet-payhub-prod/subnets/snet-payhub-data",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "snet-payhub-data",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {},
+      "properties": {
+        "addressPrefixes": [
+          "10.60.10.0/24"
+        ],
+        "virtualNetwork": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/virtualNetworks/vnet-payhub-prod"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/networkSecurityGroups/nsg-payhub-web",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "nsg-payhub-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "securityRules": [
+          {
+            "name": "allow-https",
+            "properties": {
+              "priority": 300,
+              "direction": "Inbound",
+              "access": "Allow",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*"
+            }
+          },
+          {
+            "name": "temp-ssh-open",
+            "properties": {
+              "priority": 310,
+              "direction": "Inbound",
+              "access": "Allow",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "0.0.0.0/0",
+              "destinationAddressPrefix": "*"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/publicIPAddresses/pip-payhub-web",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "pip-payhub-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Static",
+        "publicIPAddressVersion": "IPv4",
+        "idleTimeoutInMinutes": 10
+      },
+      "sku": {
+        "name": "Standard",
+        "tier": "Regional"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/networkInterfaces/nic-payhub-web",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "nic-payhub-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig-primary",
+            "properties": {
+              "primary": true,
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/virtualNetworks/vnet-payhub-prod/subnets/snet-payhub-web"
+              },
+              "publicIPAddress": {
+                "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/publicIPAddresses/pip-payhub-web"
+              }
+            }
+          }
+        ],
+        "networkSecurityGroup": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/networkSecurityGroups/nsg-payhub-web"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Compute/virtualMachines/vm-payhub-web-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "vm-payhub-web-01",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_B2s"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/networkInterfaces/nic-payhub-web"
+            }
+          ]
+        },
+        "osProfile": {
+          "adminUsername": "azureuser"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Sql/servers/sql-payhub-primary",
+      "type": "Microsoft.Sql/servers",
+      "name": "sql-payhub-primary",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "version": "12.0",
+        "publicNetworkAccess": "Enabled",
+        "minimalTlsVersion": "1.2"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Sql/servers/sql-payhub-primary/databases/sqldb-payhub-core",
+      "type": "Microsoft.Sql/servers/databases",
+      "name": "sqldb-payhub-core",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "serverId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Sql/servers/sql-payhub-primary",
+        "status": "Online",
+        "sku": {
+          "name": "GP_Gen5_2"
+        },
+        "maxSizeBytes": 268435456000
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.KeyVault/vaults/kvpayhubprod01",
+      "type": "Microsoft.KeyVault/vaults",
+      "name": "kvpayhubprod01",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "tenantId": "22222222-2222-4222-8222-222222222222",
+        "sku": {
+          "name": "standard"
+        },
+        "enableSoftDelete": true,
+        "softDeleteRetentionInDays": 90,
+        "purgeProtectionEnabled": true,
+        "networkAcls": {
+          "defaultAction": "Allow"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Storage/storageAccounts/stpayhub01prod",
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "stpayhub01prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "accessTier": "Hot",
+        "allowBlobPublicAccess": false,
+        "supportsHttpsTrafficOnly": true,
+        "minimumTlsVersion": "TLS1_2",
+        "publicNetworkAccess": "Enabled"
+      },
+      "kind": "StorageV2",
+      "sku": {
+        "name": "Standard_LRS"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Web/serverfarms/asp-payhub-prod",
+      "type": "Microsoft.Web/serverfarms",
+      "name": "asp-payhub-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "sku": {
+          "name": "P1v3",
+          "tier": "PremiumV3"
+        },
+        "reserved": true
+      },
+      "kind": "linux"
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Web/sites/app-payhub-prod",
+      "type": "Microsoft.Web/sites",
+      "name": "app-payhub-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "serverFarmId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Web/serverfarms/asp-payhub-prod",
+        "httpsOnly": true,
+        "kind": "app,linux",
+        "state": "Running",
+        "siteConfig": {
+          "alwaysOn": true,
+          "minTlsVersion": "1.2"
+        }
+      },
+      "kind": "app,linux"
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.OperationalInsights/workspaces/law-payhub-prod",
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "name": "law-payhub-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "retentionInDays": 30,
+        "sku": {
+          "name": "PerGB2018"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Insights/components/ai-payhub-prod",
+      "type": "Microsoft.Insights/components",
+      "name": "ai-payhub-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "Application_Type": "web",
+        "WorkspaceResourceId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.OperationalInsights/workspaces/law-payhub-prod"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-payhub-app",
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "name": "id-payhub-app",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "clientId": "00000000-0000-4000-8000-000000000001"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/privateEndpoints/pe-payhub-sql",
+      "type": "Microsoft.Network/privateEndpoints",
+      "name": "pe-payhub-sql",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-payments-prd-01",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "payments-hub",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "subnet": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/virtualNetworks/vnet-payhub-prod/subnets/snet-payhub-data"
+        },
+        "privateLinkServiceConnections": [
+          {
+            "name": "plsc-payhub-sql",
+            "properties": {
+              "privateLinkServiceId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Sql/servers/sql-payhub-primary",
+              "groupIds": [
+                "sqlServer"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod",
+      "type": "Microsoft.Resources/subscriptions/resourceGroups",
+      "name": "rg-contoso-claims-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {}
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/virtualNetworks/vnet-claimslake-prod",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "vnet-claimslake-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.61.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/virtualNetworks/vnet-claimslake-prod/subnets/snet-claimslake-web"
+          },
+          {
+            "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/virtualNetworks/vnet-claimslake-prod/subnets/snet-claimslake-data"
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/virtualNetworks/vnet-claimslake-prod/subnets/snet-claimslake-web",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "snet-claimslake-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {},
+      "properties": {
+        "addressPrefix": "10.61.1.0/24",
+        "virtualNetwork": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/virtualNetworks/vnet-claimslake-prod"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/virtualNetworks/vnet-claimslake-prod/subnets/snet-claimslake-data",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "snet-claimslake-data",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {},
+      "properties": {
+        "addressPrefixes": [
+          "10.61.10.0/24"
+        ],
+        "virtualNetwork": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/virtualNetworks/vnet-claimslake-prod"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/networkSecurityGroups/nsg-claimslake-web",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "nsg-claimslake-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "securityRules": [
+          {
+            "name": "allow-https",
+            "properties": {
+              "priority": 300,
+              "direction": "Inbound",
+              "access": "Allow",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/publicIPAddresses/pip-claimslake-web",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "pip-claimslake-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Static",
+        "publicIPAddressVersion": "IPv4",
+        "idleTimeoutInMinutes": 10
+      },
+      "sku": {
+        "name": "Standard",
+        "tier": "Regional"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/networkInterfaces/nic-claimslake-web",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "nic-claimslake-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig-primary",
+            "properties": {
+              "primary": true,
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/virtualNetworks/vnet-claimslake-prod/subnets/snet-claimslake-web"
+              },
+              "publicIPAddress": {
+                "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/publicIPAddresses/pip-claimslake-web"
+              }
+            }
+          }
+        ],
+        "networkSecurityGroup": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/networkSecurityGroups/nsg-claimslake-web"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Compute/virtualMachines/vm-claimslake-web-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "vm-claimslake-web-01",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_B2s"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/networkInterfaces/nic-claimslake-web"
+            }
+          ]
+        },
+        "osProfile": {
+          "adminUsername": "azureuser"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Sql/servers/sql-claimslake-primary",
+      "type": "Microsoft.Sql/servers",
+      "name": "sql-claimslake-primary",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "version": "12.0",
+        "publicNetworkAccess": "Enabled",
+        "minimalTlsVersion": "1.2"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Sql/servers/sql-claimslake-primary/databases/sqldb-claimslake-core",
+      "type": "Microsoft.Sql/servers/databases",
+      "name": "sqldb-claimslake-core",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "serverId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Sql/servers/sql-claimslake-primary",
+        "status": "Online",
+        "sku": {
+          "name": "GP_Gen5_2"
+        },
+        "maxSizeBytes": 268435456000
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.KeyVault/vaults/kvclaimslakeprod02",
+      "type": "Microsoft.KeyVault/vaults",
+      "name": "kvclaimslakeprod02",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {},
+      "properties": {
+        "tenantId": "22222222-2222-4222-8222-222222222222",
+        "sku": {
+          "name": "standard"
+        },
+        "enableSoftDelete": true,
+        "softDeleteRetentionInDays": 90,
+        "purgeProtectionEnabled": true,
+        "networkAcls": {
+          "defaultAction": "Deny"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Storage/storageAccounts/stclaimslake02prod",
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "stclaimslake02prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "accessTier": "Hot",
+        "allowBlobPublicAccess": false,
+        "supportsHttpsTrafficOnly": true,
+        "minimumTlsVersion": "TLS1_2",
+        "publicNetworkAccess": "Enabled"
+      },
+      "kind": "StorageV2",
+      "sku": {
+        "name": "Standard_LRS"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Web/serverfarms/asp-claimslake-prod",
+      "type": "Microsoft.Web/serverfarms",
+      "name": "asp-claimslake-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "sku": {
+          "name": "P1v3",
+          "tier": "PremiumV3"
+        },
+        "reserved": true
+      },
+      "kind": "linux"
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Web/sites/app-claimslake-prod",
+      "type": "Microsoft.Web/sites",
+      "name": "app-claimslake-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "serverFarmId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Web/serverfarms/asp-claimslake-prod",
+        "httpsOnly": true,
+        "kind": "app,linux",
+        "state": "Running",
+        "siteConfig": {
+          "alwaysOn": true,
+          "minTlsVersion": "1.2"
+        }
+      },
+      "kind": "app,linux"
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.OperationalInsights/workspaces/law-claimslake-prod",
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "name": "law-claimslake-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "retentionInDays": 30,
+        "sku": {
+          "name": "PerGB2018"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Insights/components/ai-claimslake-prod",
+      "type": "Microsoft.Insights/components",
+      "name": "ai-claimslake-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "Application_Type": "web",
+        "WorkspaceResourceId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.OperationalInsights/workspaces/law-claimslake-prod"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-claimslake-app",
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "name": "id-claimslake-app",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "clientId": "00000000-0000-4000-8000-000000000002"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/privateEndpoints/pe-claimslake-sql",
+      "type": "Microsoft.Network/privateEndpoints",
+      "name": "pe-claimslake-sql",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-contoso-claims-prod",
+      "region": "eastus2",
+      "tags": {
+        "environment": "prod",
+        "application": "claims-data-lake",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "subnet": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/virtualNetworks/vnet-claimslake-prod/subnets/snet-claimslake-data"
+        },
+        "privateLinkServiceConnections": [
+          {
+            "name": "plsc-claimslake-sql",
+            "properties": {
+              "privateLinkServiceId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Sql/servers/sql-claimslake-primary",
+              "groupIds": [
+                "sqlServer"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02",
+      "type": "Microsoft.Resources/subscriptions/resourceGroups",
+      "name": "rg-fabrikam-eu-api-02",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {}
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/virtualNetworks/vnet-euroapi-prod",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "vnet-euroapi-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.62.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/virtualNetworks/vnet-euroapi-prod/subnets/snet-euroapi-web"
+          },
+          {
+            "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/virtualNetworks/vnet-euroapi-prod/subnets/snet-euroapi-data"
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/virtualNetworks/vnet-euroapi-prod/subnets/snet-euroapi-web",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "snet-euroapi-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {},
+      "properties": {
+        "addressPrefix": "10.62.1.0/24",
+        "virtualNetwork": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/virtualNetworks/vnet-euroapi-prod"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/virtualNetworks/vnet-euroapi-prod/subnets/snet-euroapi-data",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "snet-euroapi-data",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {},
+      "properties": {
+        "addressPrefixes": [
+          "10.62.10.0/24"
+        ],
+        "virtualNetwork": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/virtualNetworks/vnet-euroapi-prod"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/networkSecurityGroups/nsg-euroapi-web",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "nsg-euroapi-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "securityRules": [
+          {
+            "name": "allow-https",
+            "properties": {
+              "priority": 300,
+              "direction": "Inbound",
+              "access": "Allow",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/publicIPAddresses/pip-euroapi-web",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "pip-euroapi-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Static",
+        "publicIPAddressVersion": "IPv4",
+        "idleTimeoutInMinutes": 10
+      },
+      "sku": {
+        "name": "Standard",
+        "tier": "Regional"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/networkInterfaces/nic-euroapi-web",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "nic-euroapi-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig-primary",
+            "properties": {
+              "primary": true,
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/virtualNetworks/vnet-euroapi-prod/subnets/snet-euroapi-web"
+              },
+              "publicIPAddress": {
+                "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/publicIPAddresses/pip-euroapi-web"
+              }
+            }
+          }
+        ],
+        "networkSecurityGroup": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/networkSecurityGroups/nsg-euroapi-web"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Compute/virtualMachines/vm-euroapi-web-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "vm-euroapi-web-01",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_B2s"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/networkInterfaces/nic-euroapi-web"
+            }
+          ]
+        },
+        "osProfile": {
+          "adminUsername": "azureuser"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Sql/servers/sql-euroapi-primary",
+      "type": "Microsoft.Sql/servers",
+      "name": "sql-euroapi-primary",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "version": "12.0",
+        "publicNetworkAccess": "Enabled",
+        "minimalTlsVersion": "1.2"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Sql/servers/sql-euroapi-primary/databases/sqldb-euroapi-core",
+      "type": "Microsoft.Sql/servers/databases",
+      "name": "sqldb-euroapi-core",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "serverId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Sql/servers/sql-euroapi-primary",
+        "status": "Online",
+        "sku": {
+          "name": "GP_Gen5_2"
+        },
+        "maxSizeBytes": 268435456000
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.KeyVault/vaults/kveuroapiprod03",
+      "type": "Microsoft.KeyVault/vaults",
+      "name": "kveuroapiprod03",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "tenantId": "22222222-2222-4222-8222-222222222222",
+        "sku": {
+          "name": "standard"
+        },
+        "enableSoftDelete": true,
+        "softDeleteRetentionInDays": 90,
+        "purgeProtectionEnabled": false,
+        "networkAcls": {
+          "defaultAction": "Deny"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Storage/storageAccounts/steuroapi03prod",
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "steuroapi03prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "accessTier": "Hot",
+        "allowBlobPublicAccess": false,
+        "supportsHttpsTrafficOnly": true,
+        "minimumTlsVersion": "TLS1_2",
+        "publicNetworkAccess": "Enabled"
+      },
+      "kind": "StorageV2",
+      "sku": {
+        "name": "Standard_LRS"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Web/serverfarms/asp-euroapi-prod",
+      "type": "Microsoft.Web/serverfarms",
+      "name": "asp-euroapi-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "sku": {
+          "name": "P1v3",
+          "tier": "PremiumV3"
+        },
+        "reserved": true
+      },
+      "kind": "linux"
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Web/sites/app-euroapi-prod",
+      "type": "Microsoft.Web/sites",
+      "name": "app-euroapi-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "serverFarmId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Web/serverfarms/asp-euroapi-prod",
+        "httpsOnly": true,
+        "kind": "app,linux",
+        "state": "Running",
+        "siteConfig": {
+          "alwaysOn": true,
+          "minTlsVersion": "1.2"
+        }
+      },
+      "kind": "app,linux"
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.OperationalInsights/workspaces/law-euroapi-prod",
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "name": "law-euroapi-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "retentionInDays": 30,
+        "sku": {
+          "name": "PerGB2018"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Insights/components/ai-euroapi-prod",
+      "type": "Microsoft.Insights/components",
+      "name": "ai-euroapi-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "Application_Type": "web",
+        "WorkspaceResourceId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.OperationalInsights/workspaces/law-euroapi-prod"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-euroapi-app",
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "name": "id-euroapi-app",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "clientId": "00000000-0000-4000-8000-000000000003"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/privateEndpoints/pe-euroapi-sql",
+      "type": "Microsoft.Network/privateEndpoints",
+      "name": "pe-euroapi-sql",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-fabrikam-eu-api-02",
+      "region": "centralus",
+      "tags": {
+        "environment": "prod",
+        "application": "europe-api",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "subnet": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/virtualNetworks/vnet-euroapi-prod/subnets/snet-euroapi-data"
+        },
+        "privateLinkServiceConnections": [
+          {
+            "name": "plsc-euroapi-sql",
+            "properties": {
+              "privateLinkServiceId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Sql/servers/sql-euroapi-primary",
+              "groupIds": [
+                "sqlServer"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy",
+      "type": "Microsoft.Resources/subscriptions/resourceGroups",
+      "name": "rg-ops--legacy",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {}
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/virtualNetworks/vnet-opsmon-prod",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "vnet-opsmon-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.63.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/virtualNetworks/vnet-opsmon-prod/subnets/snet-opsmon-web"
+          },
+          {
+            "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/virtualNetworks/vnet-opsmon-prod/subnets/snet-opsmon-data"
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/virtualNetworks/vnet-opsmon-prod/subnets/snet-opsmon-web",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "snet-opsmon-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {},
+      "properties": {
+        "addressPrefix": "10.63.1.0/24",
+        "virtualNetwork": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/virtualNetworks/vnet-opsmon-prod"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/virtualNetworks/vnet-opsmon-prod/subnets/snet-opsmon-data",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "snet-opsmon-data",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {},
+      "properties": {
+        "addressPrefixes": [
+          "10.63.10.0/24"
+        ],
+        "virtualNetwork": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/virtualNetworks/vnet-opsmon-prod"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/networkSecurityGroups/nsg-opsmon-web",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "nsg-opsmon-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "securityRules": [
+          {
+            "name": "allow-https",
+            "properties": {
+              "priority": 300,
+              "direction": "Inbound",
+              "access": "Allow",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/publicIPAddresses/pip-opsmon-web",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "pip-opsmon-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Static",
+        "publicIPAddressVersion": "IPv4",
+        "idleTimeoutInMinutes": 10
+      },
+      "sku": {
+        "name": "Standard",
+        "tier": "Regional"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/networkInterfaces/nic-opsmon-web",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "nic-opsmon-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig-primary",
+            "properties": {
+              "primary": true,
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/virtualNetworks/vnet-opsmon-prod/subnets/snet-opsmon-web"
+              },
+              "publicIPAddress": {
+                "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/publicIPAddresses/pip-opsmon-web"
+              }
+            }
+          }
+        ],
+        "networkSecurityGroup": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/networkSecurityGroups/nsg-opsmon-web"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Compute/virtualMachines/vm-ops--legacy__01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "vm-ops--legacy__01",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_B2s"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/networkInterfaces/nic-opsmon-web"
+            }
+          ]
+        },
+        "osProfile": {
+          "adminUsername": "azureuser"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Sql/servers/sql-opsmon-primary",
+      "type": "Microsoft.Sql/servers",
+      "name": "sql-opsmon-primary",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "version": "12.0",
+        "publicNetworkAccess": "Enabled",
+        "minimalTlsVersion": "1.2"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Sql/servers/sql-opsmon-primary/databases/sqldb-opsmon-core",
+      "type": "Microsoft.Sql/servers/databases",
+      "name": "sqldb-opsmon-core",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "serverId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Sql/servers/sql-opsmon-primary",
+        "status": "Online",
+        "sku": {
+          "name": "GP_Gen5_2"
+        },
+        "maxSizeBytes": 268435456000
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.KeyVault/vaults/kvopsmonprod04",
+      "type": "Microsoft.KeyVault/vaults",
+      "name": "kvopsmonprod04",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {},
+      "properties": {
+        "tenantId": "22222222-2222-4222-8222-222222222222",
+        "sku": {
+          "name": "standard"
+        },
+        "enableSoftDelete": true,
+        "softDeleteRetentionInDays": 90,
+        "purgeProtectionEnabled": true,
+        "networkAcls": {
+          "defaultAction": "Deny"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Storage/storageAccounts/stopsmon04prod",
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "stopsmon04prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "accessTier": "Hot",
+        "allowBlobPublicAccess": false,
+        "supportsHttpsTrafficOnly": true,
+        "minimumTlsVersion": "TLS1_2",
+        "publicNetworkAccess": "Enabled"
+      },
+      "kind": "StorageV2",
+      "sku": {
+        "name": "Standard_LRS"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Web/serverfarms/asp-opsmon-prod",
+      "type": "Microsoft.Web/serverfarms",
+      "name": "asp-opsmon-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "sku": {
+          "name": "P1v3",
+          "tier": "PremiumV3"
+        },
+        "reserved": true
+      },
+      "kind": "linux"
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Web/sites/app-opsmon-prod",
+      "type": "Microsoft.Web/sites",
+      "name": "app-opsmon-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "serverFarmId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Web/serverfarms/asp-opsmon-prod",
+        "httpsOnly": true,
+        "kind": "app,linux",
+        "state": "Running",
+        "siteConfig": {
+          "alwaysOn": true,
+          "minTlsVersion": "1.2"
+        }
+      },
+      "kind": "app,linux"
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.OperationalInsights/workspaces/law-opsmon-prod",
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "name": "law-opsmon-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "retentionInDays": 30,
+        "sku": {
+          "name": "PerGB2018"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Insights/components/ai-opsmon-prod",
+      "type": "Microsoft.Insights/components",
+      "name": "ai-opsmon-prod",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "Application_Type": "web",
+        "WorkspaceResourceId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.OperationalInsights/workspaces/law-opsmon-prod"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.ManagedIdentity/userAssignedIdentities/id-opsmon-app",
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "name": "id-opsmon-app",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "clientId": "00000000-0000-4000-8000-000000000004"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/privateEndpoints/pe-opsmon-sql",
+      "type": "Microsoft.Network/privateEndpoints",
+      "name": "pe-opsmon-sql",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-ops--legacy",
+      "region": "eastus",
+      "tags": {
+        "environment": "prod",
+        "application": "operations-monitoring",
+        "owner": "platform-ops"
+      },
+      "properties": {
+        "subnet": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/virtualNetworks/vnet-opsmon-prod/subnets/snet-opsmon-data"
+        },
+        "privateLinkServiceConnections": [
+          {
+            "name": "plsc-opsmon-sql",
+            "properties": {
+              "privateLinkServiceId": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Sql/servers/sql-opsmon-primary",
+              "groupIds": [
+                "sqlServer"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/networkInterfaces/nic-payhub-web",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/networkSecurityGroups/nsg-payhub-web",
+      "relation": "uses_network_security_group"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Compute/virtualMachines/vm-payhub-web-01",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Network/networkInterfaces/nic-payhub-web",
+      "relation": "uses_network_interface"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Sql/servers/sql-payhub-primary/databases/sqldb-payhub-core",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Sql/servers/sql-payhub-primary",
+      "relation": "hosted_on"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Web/sites/app-payhub-prod",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Web/serverfarms/asp-payhub-prod",
+      "relation": "uses_service_plan"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.Insights/components/ai-payhub-prod",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-payments-prd-01/providers/Microsoft.OperationalInsights/workspaces/law-payhub-prod",
+      "relation": "writes_to"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/networkInterfaces/nic-claimslake-web",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/networkSecurityGroups/nsg-claimslake-web",
+      "relation": "uses_network_security_group"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Compute/virtualMachines/vm-claimslake-web-01",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Network/networkInterfaces/nic-claimslake-web",
+      "relation": "uses_network_interface"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Sql/servers/sql-claimslake-primary/databases/sqldb-claimslake-core",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Sql/servers/sql-claimslake-primary",
+      "relation": "hosted_on"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Web/sites/app-claimslake-prod",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Web/serverfarms/asp-claimslake-prod",
+      "relation": "uses_service_plan"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.Insights/components/ai-claimslake-prod",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-contoso-claims-prod/providers/Microsoft.OperationalInsights/workspaces/law-claimslake-prod",
+      "relation": "writes_to"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/networkInterfaces/nic-euroapi-web",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/networkSecurityGroups/nsg-euroapi-web",
+      "relation": "uses_network_security_group"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Compute/virtualMachines/vm-euroapi-web-01",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Network/networkInterfaces/nic-euroapi-web",
+      "relation": "uses_network_interface"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Sql/servers/sql-euroapi-primary/databases/sqldb-euroapi-core",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Sql/servers/sql-euroapi-primary",
+      "relation": "hosted_on"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Web/sites/app-euroapi-prod",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Web/serverfarms/asp-euroapi-prod",
+      "relation": "uses_service_plan"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.Insights/components/ai-euroapi-prod",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-fabrikam-eu-api-02/providers/Microsoft.OperationalInsights/workspaces/law-euroapi-prod",
+      "relation": "writes_to"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/networkInterfaces/nic-opsmon-web",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/networkSecurityGroups/nsg-opsmon-web",
+      "relation": "uses_network_security_group"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Compute/virtualMachines/vm-ops--legacy__01",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Network/networkInterfaces/nic-opsmon-web",
+      "relation": "uses_network_interface"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Sql/servers/sql-opsmon-primary/databases/sqldb-opsmon-core",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Sql/servers/sql-opsmon-primary",
+      "relation": "hosted_on"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Web/sites/app-opsmon-prod",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Web/serverfarms/asp-opsmon-prod",
+      "relation": "uses_service_plan"
+    },
+    {
+      "source": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.Insights/components/ai-opsmon-prod",
+      "target": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-ops--legacy/providers/Microsoft.OperationalInsights/workspaces/law-opsmon-prod",
+      "relation": "writes_to"
+    }
+  ],
+  "synthetic": true,
+  "notice": "All tenant, subscription, customer, workload, resource, and configuration data is fictional and generated for a product demonstration."
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=1280">
+<title>GENESIS — Inventory</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',sans-serif;background:#0a0f1e;color:#e2e8f0;width:1280px;min-height:720px;}
+.nav{background:rgba(15,23,42,0.95);border-bottom:1px solid rgba(99,102,241,0.3);padding:0 32px;display:flex;align-items:center;height:60px;gap:32px;}
+.logo{font-size:18px;font-weight:700;background:linear-gradient(135deg,#6366f1,#8b5cf6);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.logo span{font-weight:300;color:#94a3b8;-webkit-text-fill-color:#94a3b8;font-size:13px;margin-left:8px;}
+.nav-tabs{display:flex;gap:4px;}
+.nav-tab{padding:6px 14px;border-radius:6px;font-size:13px;color:#94a3b8;}
+.nav-tab.active{background:rgba(99,102,241,0.15);color:#a5b4fc;border:1px solid rgba(99,102,241,0.3);}
+.layout{display:flex;height:calc(100vh - 60px);}
+.sidebar{width:200px;background:rgba(10,15,30,0.9);border-right:1px solid rgba(255,255,255,0.06);padding:20px 16px;flex-shrink:0;}
+.sidebar-title{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:#475569;font-weight:600;margin-bottom:12px;}
+.filter-pill{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-radius:8px;cursor:pointer;margin-bottom:4px;font-size:13px;}
+.filter-pill.active{background:rgba(99,102,241,0.15);color:#a5b4fc;border:1px solid rgba(99,102,241,0.2);}
+.filter-pill:not(.active){color:#64748b;}
+.filter-count{background:rgba(99,102,241,0.2);color:#a5b4fc;border-radius:10px;padding:1px 7px;font-size:11px;font-weight:600;}
+.filter-pill:not(.active) .filter-count{background:rgba(255,255,255,0.05);color:#475569;}
+.content{flex:1;padding:24px;overflow:auto;}
+.search-bar{display:flex;align-items:center;gap:12px;margin-bottom:20px;}
+.search-input{flex:1;background:rgba(15,23,42,0.8);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px 16px;color:#e2e8f0;font-size:13px;font-family:'Inter',sans-serif;}
+.table{width:100%;border-collapse:collapse;}
+.table th{text-align:left;padding:10px 16px;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#475569;font-weight:600;border-bottom:1px solid rgba(255,255,255,0.06);}
+.table td{padding:12px 16px;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.04);}
+.table tr:hover td{background:rgba(99,102,241,0.04);}
+.type-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:500;}
+.module-network{background:rgba(59,130,246,0.12);color:#93c5fd;}
+.module-application{background:rgba(139,92,246,0.12);color:#c4b5fd;}
+.module-data{background:rgba(16,185,129,0.12);color:#6ee7b7;}
+.module-identity{background:rgba(234,179,8,0.12);color:#fde047;}
+.module-supporting{background:rgba(107,114,128,0.12);color:#9ca3af;}
+.sev-critical{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;background:rgba(239,68,68,0.15);color:#fca5a5;border:1px solid rgba(239,68,68,0.3);}
+.sev-high{background:rgba(249,115,22,0.15);color:#fdba74;border:1px solid rgba(249,115,22,0.3);}
+.res-name{font-weight:500;color:#e2e8f0;}
+.res-type{color:#64748b;font-size:12px;margin-top:2px;}
+</style>
+</head>
+<body>
+<div class="nav">
+  <div class="logo">GENESIS <span>Azure Cloud Blueprint Studio</span></div>
+  <div class="nav-tabs">
+    <div class="nav-tab">Overview</div>
+    <div class="nav-tab active">Inventory</div>
+    <div class="nav-tab">Dependency Graph</div>
+    <div class="nav-tab">Investigator</div>
+    <div class="nav-tab">Guardrails</div>
+    <div class="nav-tab">Copilot</div>
+    <div class="nav-tab">IaC Package</div>
+  </div>
+</div>
+<div class="layout">
+  <div class="sidebar">
+    <div class="sidebar-title">Filter by Module</div>
+    <div class="filter-pill active">All Resources <span class="filter-count">72</span></div>
+    <div class="filter-pill">Network <span class="filter-count">18</span></div>
+    <div class="filter-pill">Application <span class="filter-count">22</span></div>
+    <div class="filter-pill">Data <span class="filter-count">15</span></div>
+    <div class="filter-pill">Identity <span class="filter-count">8</span></div>
+    <div class="filter-pill">Supporting <span class="filter-count">9</span></div>
+    <div style="margin-top:24px;">
+    <div class="sidebar-title">Provider</div>
+    <div class="filter-pill active">Azure <span class="filter-count">72</span></div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="search-bar">
+      <input class="search-input" placeholder="🔍  Search resources by name, type, or region...">
+      <div style="font-size:13px;color:#64748b;">Showing 72 resources</div>
+    </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th>Module</th>
+          <th>Region</th>
+          <th>Resource Group</th>
+          <th>Tags</th>
+          <th>Findings</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><div class="res-name">vnet-prod-eastus</div><div class="res-type">Microsoft.Network/virtualNetworks</div></td>
+          <td><span class="type-badge module-network">network</span></td>
+          <td><span style="color:#94a3b8;font-size:12px;">eastus</span></td>
+          <td><span style="color:#64748b;font-size:12px;">rg-network</span></td>
+          <td><span style="color:#64748b;font-size:12px;">environment: prod</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><div class="res-name">nsg-web-inbound</div><div class="res-type">Microsoft.Network/networkSecurityGroups</div></td>
+          <td><span class="type-badge module-network">network</span></td>
+          <td><span style="color:#94a3b8;font-size:12px;">eastus</span></td>
+          <td><span style="color:#64748b;font-size:12px;">rg-network</span></td>
+          <td><span style="color:#64748b;font-size:12px;">—</span></td>
+          <td><span class="sev-critical">● Critical</span></td>
+        </tr>
+        <tr>
+          <td><div class="res-name">vm-sql-primary</div><div class="res-type">Microsoft.Compute/virtualMachines</div></td>
+          <td><span class="type-badge module-application">application</span></td>
+          <td><span style="color:#94a3b8;font-size:12px;">eastus</span></td>
+          <td><span style="color:#64748b;font-size:12px;">rg-compute</span></td>
+          <td><span style="color:#64748b;font-size:12px;">workload: database</span></td>
+          <td><span class="sev-high" style="font-size:11px;padding:2px 8px;border-radius:4px;font-weight:600;">● Low</span></td>
+        </tr>
+        <tr>
+          <td><div class="res-name">kv-prod-secrets</div><div class="res-type">Microsoft.KeyVault/vaults</div></td>
+          <td><span class="type-badge module-identity">identity</span></td>
+          <td><span style="color:#94a3b8;font-size:12px;">eastus</span></td>
+          <td><span style="color:#64748b;font-size:12px;">rg-identity</span></td>
+          <td><span style="color:#64748b;font-size:12px;">environment: prod</span></td>
+          <td><span class="sev-high">● High</span></td>
+        </tr>
+        <tr>
+          <td><div class="res-name">storage-backup-01</div><div class="res-type">Microsoft.Storage/storageAccounts</div></td>
+          <td><span class="type-badge module-data">data</span></td>
+          <td><span style="color:#94a3b8;font-size:12px;">eastus</span></td>
+          <td><span style="color:#64748b;font-size:12px;">rg-data</span></td>
+          <td><span style="color:#64748b;font-size:12px;">—</span></td>
+          <td><span class="sev-high">● High</span></td>
+        </tr>
+        <tr>
+          <td><div class="res-name">sql-server-prod</div><div class="res-type">Microsoft.Sql/servers</div></td>
+          <td><span class="type-badge module-data">data</span></td>
+          <td><span style="color:#94a3b8;font-size:12px;">eastus</span></td>
+          <td><span style="color:#64748b;font-size:12px;">rg-data</span></td>
+          <td><span style="color:#64748b;font-size:12px;">workload: database</span></td>
+          <td><span class="sev-high">● High</span></td>
+        </tr>
+        <tr>
+          <td><div class="res-name">app-service-web</div><div class="res-type">Microsoft.Web/sites</div></td>
+          <td><span class="type-badge module-application">application</span></td>
+          <td><span style="color:#94a3b8;font-size:12px;">eastus</span></td>
+          <td><span style="color:#64748b;font-size:12px;">rg-app</span></td>
+          <td><span style="color:#64748b;font-size:12px;">environment: prod</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><div class="res-name">rg-network</div><div class="res-type">Microsoft.Resources/resourceGroups</div></td>
+          <td><span class="type-badge module-supporting">supporting</span></td>
+          <td><span style="color:#94a3b8;font-size:12px;">eastus</span></td>
+          <td><span style="color:#64748b;font-size:12px;">—</span></td>
+          <td><span style="color:#64748b;font-size:12px;">environment: prod</span></td>
+          <td><span style="color:#64748b;font-size:11px;">● Low</span></td>
+        </tr>
+        <tr>
+          <td style="color:#475569;font-size:12px;" colspan="6">... and 64 more resources (network interfaces, subnets, public IPs, NSGs, VMs, SQL databases, App Service plans)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body></html>

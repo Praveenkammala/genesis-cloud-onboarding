@@ -1,0 +1,231 @@
+{
+  "name": "Northstar Commerce · Azure production demo",
+  "provider": "azure",
+  "region": "eastus",
+  "subscription_id": "11111111-1111-4111-8111-111111111111",
+  "resources": [
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo",
+      "type": "Microsoft.Resources/subscriptions/resourceGroups",
+      "name": "rg-northstar-demo",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-demo",
+      "region": "eastus",
+      "tags": {
+        "environment": "demo",
+        "application": "northstar",
+        "owner": "platform"
+      },
+      "properties": {}
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/virtualNetworks/vnet-northstar",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "vnet-northstar",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-demo",
+      "region": "eastus",
+      "tags": {
+        "environment": "demo",
+        "application": "northstar"
+      },
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.60.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/virtualNetworks/vnet-northstar/subnets/snet-web"
+          },
+          {
+            "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/virtualNetworks/vnet-northstar/subnets/snet-data"
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/virtualNetworks/vnet-northstar/subnets/snet-web",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "snet-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-demo",
+      "region": "eastus",
+      "tags": {},
+      "properties": {
+        "addressPrefix": "10.60.1.0/24",
+        "virtualNetwork": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/virtualNetworks/vnet-northstar"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/virtualNetworks/vnet-northstar/subnets/snet-data",
+      "type": "Microsoft.Network/virtualNetworks/subnets",
+      "name": "snet-data",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-demo",
+      "region": "eastus",
+      "tags": {},
+      "properties": {
+        "addressPrefixes": [
+          "10.60.10.0/24"
+        ],
+        "virtualNetwork": {
+          "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/virtualNetworks/vnet-northstar"
+        }
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/networkSecurityGroups/nsg-northstar-web",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "name": "nsg-northstar-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-demo",
+      "region": "eastus",
+      "tags": {
+        "environment": "demo",
+        "application": "northstar"
+      },
+      "properties": {
+        "securityRules": [
+          {
+            "name": "allow-https-internet",
+            "properties": {
+              "priority": 300,
+              "direction": "Inbound",
+              "access": "Allow",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "443",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*"
+            }
+          },
+          {
+            "name": "allow-ssh-private",
+            "properties": {
+              "priority": 310,
+              "direction": "Inbound",
+              "access": "Allow",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "10.60.0.0/16",
+              "destinationAddressPrefix": "*"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/publicIPAddresses/pip-northstar-web",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "pip-northstar-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-demo",
+      "region": "eastus",
+      "tags": {
+        "environment": "demo"
+      },
+      "sku": {
+        "name": "Standard",
+        "tier": "Regional"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Static",
+        "publicIPAddressVersion": "IPv4",
+        "idleTimeoutInMinutes": 10
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/networkInterfaces/nic-northstar-web",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "nic-northstar-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-demo",
+      "region": "eastus",
+      "tags": {
+        "environment": "demo"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig-primary",
+            "properties": {
+              "primary": true,
+              "privateIPAllocationMethod": "Dynamic",
+              "subnet": {
+                "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/virtualNetworks/vnet-northstar/subnets/snet-web"
+              },
+              "publicIPAddress": {
+                "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/publicIPAddresses/pip-northstar-web"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Storage/storageAccounts/stnorthstardemo01",
+      "type": "Microsoft.Storage/storageAccounts",
+      "name": "stnorthstardemo01",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-demo",
+      "region": "eastus",
+      "kind": "StorageV2",
+      "sku": {
+        "name": "Standard_LRS"
+      },
+      "tags": {
+        "environment": "demo",
+        "data-class": "archive"
+      },
+      "properties": {
+        "accessTier": "Hot",
+        "allowBlobPublicAccess": false,
+        "supportsHttpsTrafficOnly": true,
+        "minimumTlsVersion": "TLS1_2",
+        "publicNetworkAccess": "Enabled"
+      }
+    },
+    {
+      "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Compute/virtualMachines/vm-northstar-web",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "vm-northstar-web",
+      "provider": "azure",
+      "subscription_id": "11111111-1111-4111-8111-111111111111",
+      "resource_group": "rg-northstar-demo",
+      "region": "eastus",
+      "tags": {
+        "environment": "demo",
+        "application": "northstar"
+      },
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "Standard_B2s"
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "/subscriptions/11111111-1111-4111-8111-111111111111/resourceGroups/rg-northstar-demo/providers/Microsoft.Network/networkInterfaces/nic-northstar-web"
+            }
+          ]
+        },
+        "osProfile": {
+          "adminUsername": "azureuser"
+        }
+      }
+    }
+  ],
+  "relationships": []
+}
