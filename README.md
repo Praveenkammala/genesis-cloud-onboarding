@@ -1,5 +1,10 @@
 # GENESIS — Azure Cloud Blueprint Studio
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-genesis--cloud--onboarding.onrender.com-brightgreen?style=for-the-badge&logo=render)](https://genesis-cloud-onboarding.onrender.com)
+[![GitHub](https://img.shields.io/badge/GitHub-Praveenkammala%2Fgenesis--cloud--onboarding-blue?style=for-the-badge&logo=github)](https://github.com/Praveenkammala/genesis-cloud-onboarding)
+
+> 🚀 **[Try the live app → genesis-cloud-onboarding.onrender.com](https://genesis-cloud-onboarding.onrender.com)**
+
 GENESIS helps a managed-services or cloud platform team understand an inherited cloud estate. A bounded Investigator explores inventory, dependency, impact, finding, and mapping tools; Copilot uses those same tools for questions such as “what breaks if I remove this?”; a Reviewer drops recommendations without real resource citations; and a Terraform writer drafts selected skipped Azure types for local validation. This makes GENESIS relevant to Kyndryl’s cloud onboarding and managed-operations work while keeping this demo’s customer estate entirely fictional.
 
 Azure is the primary connector and Terraform target. AWS remains available as a secondary connector. Discovery is read-only; GENESIS never runs `terraform apply` or changes cloud resources.
