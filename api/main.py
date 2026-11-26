@@ -30,9 +30,19 @@ from terraform_writer import write_skipped_resources
 
 
 app = FastAPI(title="GENESIS Discovery API", version="0.1.0")
+
+_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+]
+_RENDER_SERVICE_URL = os.environ.get("RENDER_EXTERNAL_URL", "")
+if _RENDER_SERVICE_URL:
+    _ALLOWED_ORIGINS.append(_RENDER_SERVICE_URL)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=_ALLOWED_ORIGINS,
+    allow_origin_regex=r"https://.*\.onrender\.com",
     allow_credentials=False,
     allow_methods=["GET", "POST"],
     allow_headers=["Content-Type"],
@@ -1178,3 +1188,12 @@ def download_package(run_id: str, actor: Actor = Depends(current_actor)) -> Stre
     buffer.seek(0)
     filename = safe_label(result["environment"]["name"]) + "-genesis-iac.zip"
     return StreamingResponse(buffer, media_type="application/zip", headers={"Content-Disposition": f'attachment; filename="{filename}"'})
+
+
+# Serve the React SPA for all non-API routes (production build)
+@app.get("/{full_path:path}", include_in_schema=False)
+def serve_spa(full_path: str) -> FileResponse:
+    index = FRONTEND_DIST / "index.html"
+    if index.is_file():
+        return FileResponse(index)
+    raise HTTPException(status_code=404, detail="Frontend not built. Run 'npm run build' first.")

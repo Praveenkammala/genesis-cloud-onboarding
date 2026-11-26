@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: genesis-cloud-onboarding
+    runtime: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r api/requirements.txt && npm ci && npm run build
+    startCommand: uvicorn main:app --app-dir api --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: NODE_VERSION
+        value: 20.0.0
+      - key: AZURE_OPENAI_ENDPOINT
+        sync: false
+      - key: AZURE_OPENAI_CHAT_DEPLOYMENT
+        sync: false
